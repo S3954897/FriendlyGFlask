@@ -128,7 +128,7 @@ def adminShopsAddNew():
 def items():
     user = current_user
     items = Items.query.filter_by(primaryUserID=user.id).all()
-    return render_template("items.html", user=user, items=items)
+    return render_template("Items.html", user=user, items=items)
 
 
 @views.route('/itemAddNew', methods=['GET', 'POST'])
