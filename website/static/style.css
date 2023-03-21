@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Nunito:ital,wght@1,600&family=Titan+One&display=swap');
+
+
+body {
+    background: #ffffff;
+    width: 1200px;
+    height: 680px;
+    font-family: 'Lobster', sans-serif;
+    font-size: 1rem;
+    color: #b64400;
+    margin: 20px;
+}
+
+p, table {
+    font-family: 'Nunito', sans-serif;
+    color: #b60404;
+    font-size: 16px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 0;
+}
+
+table {
+    width: 100%;
+}
+
+.col1{
+    width: 490px;
+}
+
+h1 {
+    font-size: 50px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+h2 {
+    font-size: 30px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+h1 {
+    color: #ff5e00;
+    /*text-shadow: 5px 5px black;*/
+}
+
+.menu1 div {
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: fit-content;
+    width: 595px;
+    height: 140px;
+    background-color: #570000;
+    /*margin: auto;*/
+    padding-left: 15px;
+}
+
+main {
+    box-sizing: border-box;
+    display: inline-grid;
+    grid-template-columns: 600px 600px;
+    gap: 5px;
+}
+
+nav ul li{
+    display: inline-block;
+}
+
+nav a{
+    font-family: 'Orbitron', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px 30px;
+    width: 120px;
+}
+
+/*This is correct try not to use class selectors as it can often cause bloated code */
+nav a:link,
+nav a:visited {
+    color: #EFFC93;
+    background-color: #80C271;
+}
+nav a:hover,
+nav a:active,
+nav a:focus {
+    color: #80C271;
+    background-color: #EFFC93;
+}
+
+fieldset {
+    display:flex;
+    width: fit-content;
+    margin: 10px 10px;
+    border-width: 0;
+}
+
+fieldset legend {
+    font-family: "Bradley Hand";
+    margin-bottom: 20px;
+    font-size: xx-large;
+    color: #EFFC93;
+    text-align: center;
+}
+
+fieldset legend::before,
+fieldset legend::after{
+    content: "\2725";
+    padding: 20px;
+}
+
+fieldset input[type="radio"] + label {
+    color: #EFFC93;
+    background-color: #80C271;
+    padding: 10px 10px;
+    text-transform: uppercase;
+    font-family: 'Orbitron', sans-serif;
+    transition: 0.5s;
+
+}
+
+fieldset input[type="radio"]:first-of-type + label {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+fieldset input[type="radio"]:last-of-type + label {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+fieldset input[type="radio"]:checked + label {
+    color: #80C271;
+    background-color: #EFFC93;
+
+}
+
+fieldset input[type="radio"]{
+    display: none;
+}

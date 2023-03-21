@@ -1,0 +1,57 @@
+{% extends "base.html" %} {% block title %}Admin{% endblock %}
+{% block content %}
+    <div class="header" id="myHeader">
+        <h2>Admin</h2>
+        <br>
+        <button onclick="window.location.href='/logout';">Logout</button>
+        <nav>
+            <ul>
+                <li><a href='/screens'>Screens</a></li>
+                <li><a href='/items'>Items</a></li>
+                <li><a href='/profile'>Profile</a></li>
+                {% if user.userType == 1 %}
+                    <li><a href='/home'>Home</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    <div>
+        <form method="POST">
+            <fieldset>
+                <input type="radio" id="users" name="setup" value="users" checked="checked">
+                <label for="users">Users</label>
+                <input type="radio" id="shops" name="setup" value="shops" onclick="window.location.href='/adminShops';">
+                <label for="shops">Shops</label>
+                <input type="radio" id="displays" name="setup" value="displays" onclick="window.location.href='/adminDisplays';">
+                <label for="displays">Displays</label>
+            </fieldset>
+        </form>
+    </div>
+    <div>
+        <h3>All Users</h3>
+        <table>
+            <thead>
+                <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>User Type</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.firstName }}</td>
+                    <td>{{ user.lastName }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td>{{ user.userType }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

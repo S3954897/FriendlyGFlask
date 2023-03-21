@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block title %}Items{% endblock %}
+{% block content %}
+        <div>
+            <h3>Add New Item</h3>
+            <form method="POST">
+                <button type="submit">SAVE</button>
+                <article>
+                    <table>
+                        <tr>
+                            <th>Item Name: </th>
+                            <td>
+                                <input
+                                        type="newItemName"
+                                        class="form-control"
+                                        id="newItemName"
+                                        name="newItemName"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Item Price: </th>
+                            <td>
+                                <input
+                                        type="newItemPrice"
+                                        class="form-control"
+                                        id="newItemPrice"
+                                        name="newItemPrice"
+                                >
+                            </td>
+                        </tr>
+
+                    </table>
+                </article>
+            </form>
+        </div>
+{% endblock %}

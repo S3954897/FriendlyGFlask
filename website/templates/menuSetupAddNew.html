@@ -1,0 +1,68 @@
+{% extends "base.html" %} {% block title %}Menu Setup{% endblock %}
+{% block content %}
+        <div>
+            <h3>Setup New Menu</h3>
+            <form method="POST">
+                <button type="submit">SAVE</button>
+                <article>
+                    <table>
+                        <tr>
+                            <th>Menu Title: </th>
+                            <td>
+                                <input
+                                        type="newMenuTitle"
+                                        class="form-control"
+                                        id="newMenuTitle"
+                                        name="newMenuTitle"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Menu Type: </th>
+                            <td>
+                                <input
+                                        type="newMenuTypeID"
+                                        class="form-control"
+                                        id="newMenuTypeID"
+                                        name="newMenuTypeID"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Start Time: </th>
+                            <td>
+                                <input
+                                        type="time"
+                                        class="form-control"
+                                        id="newMenuStartTime"
+                                        name="newMenuStartTime"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Finish Time: </th>
+                            <td>
+                                <input
+                                        type="time"
+                                        class="form-control"
+                                        id="newMenuFinishTime"
+                                        name="newMenuFinishTime"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Menu Active: </th>
+                            <td>
+                                <input
+                                        type="checkbox"
+                                        class="form-control"
+                                        id="newMenuActive"
+                                        name="newMenuActive"
+                                >
+                            </td>
+                        </tr>
+                    </table>
+                </article>
+            </form>
+        </div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %} {% block title %}Admin{% endblock %}
+{% block content %}
+    <div class="header" id="myHeader">
+        <h2>Admin</h2>
+        <br>
+        <button onclick="window.location.href='/logout';">Logout</button>
+        <nav>
+            <ul>
+                <li><a href='/screens'>Screens</a></li>
+                <li><a href='/items'>Items</a></li>
+                <li><a href='/profile'>Profile</a></li>
+                {% if user.userType == 1 %}
+                    <li><a href='/home'>Home</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    <div>
+        <form method="POST">
+            <fieldset>
+                <input type="radio" id="users" name="setup" value="users" onclick="window.location.href='/adminUsers';">
+                <label for="users">Users</label>
+                <input type="radio" id="shops" name="setup" value="shops" checked="checked">
+                <label for="shops">Shops</label>
+                <input type="radio" id="displays" name="setup" value="displays" onclick="window.location.href='/adminDisplays';">
+                <label for="displays">Displays</label>
+            </fieldset>
+        </form>
+    </div>
+    <div>
+        <h3>All Shops</h3>
+        {% block addNewContent %}
+        <button type="button" onclick="window.location.href='/adminShopsAddNew';">Add a new Shop</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>ShopID</th>
+                    <th>Shop Name</th>
+                    <th>Shop Address</th>
+                    <th>Primary User</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for shop in shops %}
+                <tr onclick="window.location.href='/adminShopEdit/{{ shop.shopID }}';" name="{{ shop.shopID }}">
+                    <td>{{ shop.shopID }}</td>
+                    <td>{{ shop.shopName }}</td>
+                    <td>{{ shop.shopAddress }}</td>
+                    <td>
+                    {% for user in users %}
+                        {% if user.id == shop.primaryUserID %}
+                            {{ user.firstName }} {{ user.lastName }}
+                        {% endif %}
+                    {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endblock %}
+    </div>
+{% endblock %}

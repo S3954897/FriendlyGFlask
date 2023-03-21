@@ -1,0 +1,33 @@
+{% extends "base.html" %}{% block title %}Menu Setup{% endblock %}
+{% block content %}
+    <div>
+        <h3>Menu Setup</h3>
+            <button type="button" onclick="window.location.href='/menuSetupAddNew/{{ display.displayID }}';" name="{{ display.displayID }}">Add a new Menu Setup</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Active</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for shopMenu in shopMenus %}
+                    <tr onclick="window.location.href='/menuSetupEdit/{{ shopMenu.shopMenuID }}';" name="{{ shopMenu.shopMenuID }}">
+                        <td>{{shopMenu.shopMenuID }}</td>
+                        <td>{{shopMenu.menuTitle }}</td>
+                        <td>{{shopMenu.menuTypeID }}</td>
+                        <td>{{shopMenu.menuStartTime }}</td>
+                        <td>{{shopMenu.menuFinishTime }}</td>
+                        <td>{{shopMenu.menuActive }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+    </div>
+
+
+{% endblock %}

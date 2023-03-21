@@ -1,0 +1,50 @@
+{% extends "base.html" %} {% block title %}Admin{% endblock %}
+{% block content %}
+    <div class="header" id="myHeader">
+        <h2>Admin - Displays</h2>
+        <br>
+        <button onclick="window.location.href='/logout';">Logout</button>
+        <nav>
+            <ul>
+                <li><a href='/screens'>Screens</a></li>
+                <li><a href='/items'>Items</a></li>
+                <li><a href='/profile'>Profile</a></li>
+                {% if user.userType == 1 %}
+                    <li><a href='/home'>Home</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    <div>
+        <form method="POST">
+            <fieldset>
+                <input type="radio" id="users" name="setup" value="users" onclick="window.location.href='/adminUsers';">
+                <label for="users">Users</label>
+                <input type="radio" id="shops" name="setup" value="shops" onclick="window.location.href='/adminShops';">
+                <label for="shops">Shops</label>
+                <input type="radio" id="displays" name="setup" value="displays" checked="checked">
+                <label for="displays">Displays</label>
+            </fieldset>
+        </form>
+    </div>
+    <div>
+        <h3>All Displays</h3>
+        <button type="button" onclick="window.location.href='/adminDisplaysAddNew';">Add a new Display</button>
+        <table>
+            <thead>
+                <tr>
+                <th>Display ID</th>
+                <th>Shop ID</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for display in displays %}
+                <tr>
+                    <td>{{ display.displayID }}</td>
+                    <td>{{ display.shopID }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

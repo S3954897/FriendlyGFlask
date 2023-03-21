@@ -1,0 +1,60 @@
+{% extends "base.html" %} {% block title %}Profile{% endblock %}
+{% block content %}
+    <div class="header" id="myHeader">
+        <h2>Profile</h2>
+        <nav>
+            <ul>
+                <li><a href='/screens'>Screens</a></li>
+                <li><a href='/items'>Items</a></li>
+                <li><a href='/home'>Home</a></li>
+{#                <li><a href='grid.html'>Grid Layout</a></li>#}
+            </ul>
+        </nav>
+    </div>
+    {% block displaySetup %}
+    <div>
+        <h3>Profile data</h3>
+        <button type="button" onclick="window.location.href='/profile_edit';">Edit</button>
+        <article>
+            <table>
+                <tr>
+                    <th>First Name: </th>
+                    <td class="col1">{{ user.firstName }} </td>
+                </tr>
+                <tr>
+                    <th>Last Name: </th>
+                    <td class="col1">{{ user.lastName }}</td>
+                </tr>
+                <tr>
+                    <th>Email: </th>
+                    <td>{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <th>Phone: </th>
+                    <td>{{ user.phone }}</td>
+                </tr>
+                <tr>
+                    <th>Linked Shops </th>
+                    <td>
+                        {% for userShop in userShops %}
+                            <tr>
+                                <td>
+                                    {{ userShop.shopName }} {{ userShop.shopAddress }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Displays</th>
+                                    {% for display in userShop.displays %}
+                                        <td onclick="window.location.href='/menuSetup/{{ display.displayID }}';" name="{{ display.displayID }}">
+                                            {{ display.displayID }}<br>
+                                        </td>
+                                    {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </td>
+                </tr>
+            </table>
+        </article>
+    </div>
+    {% endblock %}
+{% endblock %}

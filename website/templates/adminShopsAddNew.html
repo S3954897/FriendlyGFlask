@@ -1,0 +1,44 @@
+{% extends "adminShops.html" %} {% block title %}Admin{% endblock %}
+{% block addNewContent %}
+        <div>
+        <h3>Add New Shop</h3>
+        <form method="POST">
+            <button type="submit">SAVE</button>
+            <article>
+                <table>
+                    <tr>
+                        <th>Shop Name: </th>
+                        <td>
+                            <input
+                              type="newShopName"
+                              class="form-control"
+                              id="newShopName"
+                              name="newShopName">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Address: </th>
+                        <td>
+                            <input
+                              type="newShopAddress"
+                              class="form-control"
+                              id="newShopAddress"
+                              name="newShopAddress">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Primary User: </th>
+                        <td>
+                            <select class="form-control" id="primaryUserID" name="primaryUserID">
+                            {% for user in users %}
+                                <option value="{{ user.id }}">{{ user.firstName }} {{ user.lastName }}</option>
+                            {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+
+                </table>
+            </article>
+        </form>
+    </div>
+{% endblock %}

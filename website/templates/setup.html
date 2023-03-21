@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block title %}Setup{% endblock %}
+{% block header %}
+        <header>
+            <h1>Setup</h1>
+        </header>
+{% endblock %}
+{% block content %}
+    <div>
+        <form action="/setup" method="post">
+            <input type="text" name="item1" id="item1">
+            <br>
+            <button type="submit" name="form" value="Submit">Submit</button>
+        </form>
+        <br>
+        <button onclick="window.location.href='/logout';">Logout</button>
+    </div>
+{% endblock %}
