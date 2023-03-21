@@ -10,7 +10,7 @@
             {% for menuItem in menuItems %}
                 <tr>
                     <td>{{ menuItem.item.itemName }}</td>
-                    <td>{{ menuItem.item.itemPrice }}</td>
+                    <td>${{ menuItem.item.itemPrice }}</td>
                 </tr><br>
             {% endfor %}
         </table>
