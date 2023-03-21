@@ -8,7 +8,7 @@ $(document).ready(function() {
   setInterval(() => {
     // make an AJAX request to get the latest value of item1
     $.ajax({
-      url: '/get-item1-value',
+      url: '/D0573',
       type: 'GET',
       success: function(data) {
         // update the content of the element with the new value
