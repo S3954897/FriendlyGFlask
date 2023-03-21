@@ -1,198 +1,24 @@
-{% extends "base.html" %}{% block title %}Breakfast{% endblock %}
-{% block header %}
-        <header>
-            <h1>Breakfast Menu</h1>
-        </header>
-{% endblock %}
+{% extends "base.html" %}{% block title %}{{ shopMenuTitle }}{% endblock %}
 {% block content %}
-        <main class="menu1">
-            <div>
-                <article>
-                    <table id="myTable">
-                        <tr>
-                            <td class="col1">{{ item1 }}</td>
-                            <td>$1.00</td>
-                        </tr>
-                        <tr>
-                            <td class="col1">Bacon & Egg Roll with BBQ sauce</td>
-                            <td>$5.00</td>
-                        </tr>
-                        <tr>
-                            <td  class="col1">Bacon & Egg Roll with hollandaise sauce</td>
-                            <td>$5.50</td>
-                        </tr>
-                        <tr>
-                            <td class="col1">Bacon & Egg Roll Muffin</td>
-                            <td>$4.30</td>
-                        </tr>
-                        <tr>
-                            <td class="col1">Sausages & Gravy</td>
-                            <td>$6.50</td>
-                        </tr>
-                    </table>
-                </article>
-            </div>
-            <div>
-                <h2>Whole Chicken</h2>
-                <article>
-                    <table>
-                        <tr>
-                            <td class="col1">plus 1.25L Coca-Cola Variety</td>
-                            <td class="col2">$14.49</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </article>
-            </div>
-            <div>
-                <h2>Bacon & Egg Muffin</h2>
-                <article>
-                    <table>
-                        <tr>
-                            <td class="col1">plus 600ml 'Mount Franklin</td>
-                            <td>$6.50</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </article>
-            </div>
-            <div>
-                <h2>Half Chicken</h2>
-                <article>
-                    <table>
-                        <tr>
-                            <td class="col1">plus 600ml Coca-Cola Variety</td>
-                            <td class="col2">$8.99</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </article>
-            </div>
-            <div>
-                <h2>Breakfast Combo</h2>
-                <article>
-                    <table>
-                        <tr>
-                            <td class="col1">Bacon, Egg & Hashbrown</td>
-                            <td class="col2">$8.99</td>
-                        </tr>
-                        <tr>
-                            <td>plus 600ml 'Mount Franklin'</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </article>
-            </div>
-            <div>
-                <h2>Half Chicken</h2>
-                <article>
-                    <table>
-                        <tr>
-                            <td class="col1">plus 600ml Coca-Cola Variety</td>
-                            <td class="col2">$8.99</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </article>
-            </div>
-            <div>
-                <h2>Breakfast Coffee Combo</h2>
-                <article>
-                    <table>
-                        <tr>
-                            <td class="col1">Bacon, Egg & Hashbrown</td>
-                            <td class="col2">$7.00</td>
-                        </tr>
-                        <tr>
-                            <td>plus regular coffee</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </article>
-            </div>
-
-            <div>
-                <h2>Fresh Sandwich</h2>
-                <article>
-                    <table>
-                        <tr>
-                            <td class="col1">plus 600ml 'Mount Franklin'</td>
-                            <td class="col2">$6.00</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </article>
-            </div>
-        </main>
-{% endblock   %}
+    <div>
+        <header>
+            <h1>Test - {{ shopMenuTitle }}</h1>
+        </header>
+    </div>
+    <div>
+        <table id="myTable">
+            {% for menuItem in menuItems %}
+                <tr>
+                    <td>{{ menuItem.item.itemName }}</td>
+                    <td>${{ menuItem.item.itemPrice }}</td>
+                </tr><br>
+            {% endfor %}
+        </table>
+    </div>
+    <script>
+        // Set the interval to refresh the entire page
+        setInterval(() => {
+            location.reload(); // Refresh the page
+        }, 5000); // Refresh every 5 seconds
+    </script>
+{% endblock %}

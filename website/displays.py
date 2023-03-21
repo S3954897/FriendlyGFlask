@@ -1,6 +1,5 @@
-from flask import Blueprint, render_template, request, jsonify, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
-from . import db
 from .models import *
 from datetime import datetime, time
 
@@ -72,13 +71,11 @@ def menuSetupAddNew(display_id):
             newMenuStartTime = datetime.strptime(newMenuStartTime_alt, '%H:%M:%S').time()
         else:
             newMenuStartTime = datetime.strptime(newMenuStartTime_alt, '%H:%M').time()
+
         if len(newMenuFinishTime_alt) > 5:
             newMenuFinishTime = datetime.strptime(newMenuFinishTime_alt, '%H:%M:%S').time()
         else:
             newMenuFinishTime = datetime.strptime(newMenuFinishTime_alt, '%H:%M').time()
-
-        # newMenuStartTime = datetime.strptime(newMenuStartTime_str, '%H:%M').time()
-        # newMenuFinishTime = datetime.strptime(newMenuFinishTime_str, '%H:%M').time()
 
         newMenuSetup = ShopMenus(menuTitle=newMenuTitle,
                                  menuTypeID=newMenuTypeID,
@@ -107,7 +104,6 @@ def menuSetupEdit(shopMenu_id):
     shopMenu = ShopMenus.query.get(shopMenuID)
     newMenuActive_alt = 'on' if shopMenu.menuActive else 'off'
 
-
     if request.method == 'POST':
         form_type = request.form.get('form_type')
         if form_type == 'menu_setup_edit':
@@ -115,11 +111,16 @@ def menuSetupEdit(shopMenu_id):
             shopMenu.menuType = request.form.get('newMenuType')
 
             newMenuStartTime_alt = request.form.get('newMenuStartTime')
+            #if statement required as there is a change in format of the time from read to write.
+            #the if statement handles both cases.
             if len(newMenuStartTime_alt) > 5:
                 shopMenu.menuStartTime = datetime.strptime(newMenuStartTime_alt, '%H:%M:%S').time()
             else:
                 shopMenu.menuStartTime = datetime.strptime(newMenuStartTime_alt, '%H:%M').time()
+
             newMenuFinishTime_alt = request.form.get('newMenuFinishTime')
+            #if statement required as there is a change in format of the time from read to write.
+            #the if statement handles both cases.
             if len(newMenuFinishTime_alt) > 5:
                 shopMenu.menuFinishTime = datetime.strptime(newMenuFinishTime_alt, '%H:%M:%S').time()
             else:
@@ -135,6 +136,7 @@ def menuSetupEdit(shopMenu_id):
         elif form_type == 'add_menu_item':
             itemIDs = request.form.getlist('item')
             groupID = 1 # request.form.get('groupID')
+            # This is to establish the order of items within the user constructed menu
             for i, itemID in enumerate(itemIDs, 1):
                 menuItem = MenuItems(menuID=shopMenuID,
                                      itemID=itemID,
@@ -154,19 +156,29 @@ def menuSetupEdit(shopMenu_id):
                            items=items)
 
 
-@displays.route('/D0573')
-def D0573():
-    displayID = int('0573')
+#The GET request aquires the display_id number given to each compute stick.
+#The display_id aligns to the set menu options available for the display_id set by the user.
+@displays.route('/display/<int:display_id>', methods=['GET', 'POST'])
+def display(display_id):
+    displayID = display_id
+    #grabs all the menus for the display_id
+    shopMenus = ShopMenus.query.filter_by(displayID=displayID).all()
     menuID = 1
-    shopMenus = ShopMenus.query.filter_by(displayID=displayID).first()
+    shopMenuTitle = "Default"
+
+    for shopMenu in shopMenus:
+        #filters the menus by active and time and sends the items in that menu to the display.
+        if shopMenu.menuStartTime <= datetime.now().time() < shopMenu.menuFinishTime:
+            menuID = shopMenu.shopMenuID
+            shopMenuTitle = shopMenu.menuTitle
     menuItems = MenuItems.query.filter_by(menuID=menuID).all()
-
-    return render_template('D0573.html',
+    return render_template('display.html',
                            shopMenus=shopMenus,
-                           menuItems=menuItems)
+                           menuItems=menuItems,
+                           shopMenuTitle=shopMenuTitle)
 
 
-def linkItemName(itemID):
-    itemName = Items.query.filter_by(itemID=itemID)
-    itemPrice = Items.query.filter_by(itemID=itemID)
-    return (itemName, itemPrice)
+# def linkItemName(itemID):
+#     itemName = Items.query.filter_by(itemID=itemID)
+#     itemPrice = Items.query.filter_by(itemID=itemID)
+#     return (itemName, itemPrice)

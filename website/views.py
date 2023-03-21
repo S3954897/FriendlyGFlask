@@ -43,13 +43,13 @@ def profile_edit():
         return redirect(url_for('views.profile'))
     return render_template("profile_edit.html", user=user)
 
-
+#no use for this screen at this time.  Keeping just incase something else pop's up
 @views.route('/screens')
 @login_required
 def screens():
     return render_template("screens.html")
 
-
+#The flag for an admin user has to be set manually in the db
 @views.route('/admin', methods=['GET', 'POST'])
 @login_required
 def admin():

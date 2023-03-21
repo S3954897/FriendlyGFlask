@@ -3,10 +3,10 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Time
 from os import path
 from flask_login import LoginManager
-from flask_migrate import Migrate
+# from flask_migrate import Migrate
 
 db = SQLAlchemy()
-migrate = Migrate()
+# migrate = Migrate()
 DB_NAME = "friendlyG.db"
 
 
@@ -15,14 +15,11 @@ def create_app():
     app.config['SECRET_KEY'] = 'itAlwaysWorksInTheEnd'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
-    migrate.init_app(app, db)
+    # migrate.init_app(app, db)
 
     from .views import views
     from .displays import displays
     from .auth import auth
-
-
-
 
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(displays, url_prefix='/')
@@ -39,7 +36,6 @@ def create_app():
     @login_manager.user_loader
     def load_user(id):
         return Users.query.get(int(id))
-
     return app
 
 
