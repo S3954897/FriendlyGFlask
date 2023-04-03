@@ -1,17 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Edit Item</h1>
-  <form method="POST" action="{{ url_for('views.itemEdit', item_id=item.itemID) }}">
-    <input type="hidden" name="itemID" value="{{ item.itemID }}">
-    <div class="form-group">
-      <label for="newItemName">Item Name:</label>
-      <input type="text" class="form-control" id="newItemName" name="newItemName" value="{{ item.itemName }}">
-    </div>
-    <div class="form-group">
-      <label for="newitemPrice">Item Price:</label>
-      <input type="text" class="form-control" id="newitemPrice" name="newItemPrice" value="{{ item.itemPrice }}">
-    </div>
-    <button type="submit" class="btn btn-primary">Save</button>
-  </form>
+    <h1>Edit Item</h1>
+    <form method="POST" action="{{ url_for('views.itemEdit', item_id=item.itemID) }}">
+        <input type="hidden" name="itemID" value="{{ item.itemID }}">
+        <div class="form-group">
+            <label for="newItemName">Item Name:</label>
+            <input type="text" class="form-control" id="newItemName" name="newItemName" value="{{ item.itemName }}">
+        </div>
+        <div class="form-group">
+            <label for="newitemPrice">Item Price:</label>
+            <input type="text" class="form-control" id="newitemPrice" name="newItemPrice" value="{{ item.itemPrice }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+    <form method="POST" action="{{ url_for('views.itemDelete', item_id=item.itemID) }}" class="d-inline">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
+    </form>
 {% endblock %}
+
+

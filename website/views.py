@@ -6,7 +6,6 @@ from .models import *
 views = Blueprint('views', __name__)
 
 
-
 @views.route('/')
 def display():
     return render_template("display.html")
@@ -142,6 +141,9 @@ def itemAddNew():
         itemNameCheck = Items.query.filter_by(itemName=newItemName).first()
         if itemNameCheck:
             flash('item name already exists.', category='error')
+        elif newItemName == "":
+            flash('no new item enetered', category='error')
+            return redirect(url_for('views.items'))
         else:
             newItem = Items(itemName=newItemName, itemPrice=newItemPrice, primaryUserID=user.id)
             db.session.add(newItem)
@@ -163,6 +165,35 @@ def itemEdit(item_id):
         db.session.commit()
         return redirect(url_for('views.items'))
     return render_template("itemEdit.html", user=user, items=items, item=item)
+
+
+@views.route('/itemDelete/<int:item_id>', methods=['POST'])
+@login_required
+def itemDelete(item_id):
+    itemID = item_id
+    item = Items.query.get(itemID)
+    nullMenuItems = MenuItems.query.filter_by(itemID=itemID).all()
+    if item:
+        for nullMenuItem in nullMenuItems:
+            if nullMenuItem:
+                db.session.delete(nullMenuItem)
+                db.session.commit()
+        db.session.delete(item)
+        db.session.commit()
+    return redirect(url_for('views.items'))
+
+
+@views.route('/update_item_order', methods=['POST'])
+@login_required
+def update_item_order():
+    item_order_data = request.json
+    for item_data in item_order_data:
+        menu_item = MenuItems.query.get(item_data['menuItemID'])
+        menu_item.itemOrder = item_data['itemOrder']
+    db.session.commit()
+    return {"status": "success"}
+
+
 
 
 @views.route('/setup', methods=['GET', 'POST'])

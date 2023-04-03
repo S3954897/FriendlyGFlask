@@ -1,1 +1,23 @@
-{% extends adminDisplays %}
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Edit Display</h1>
+    <h2>{{ displayID }}</h2>
+
+
+
+  <form method="POST" action="{{ url_for('displays.adminDisplayEdit', display_id=displayID) }}">
+    <input type="hidden" name="displayID" value="{{ displayID }}">
+    <div class="form-group">
+      <label for="newShopSelectionID">Shop Selection:</label>
+        <select class="form-control" id="newShopID" name="newShopID">
+            {% for shop in shops %}
+                <option value="{{ shop.shopID }}">{{ shop.shopID }} {{ shop.shopName }} {{ shop.shopAddress }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="reset" onclick="window.location.href='/adminDisplays';">CANCEL</button>
+
+  </form>
+{% endblock %}

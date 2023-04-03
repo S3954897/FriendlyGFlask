@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
+from sqlalchemy import asc
+
 from .models import *
 from datetime import datetime, time
 
@@ -39,6 +41,26 @@ def adminDisplaysAddNew():
                            shops=shops)
 
 
+@displays.route('/adminDisplayEdit/<int:display_id>', methods=['GET', 'POST'])
+@login_required
+def adminDisplayEdit(display_id):
+    displayID = display_id
+    user = current_user
+    #grabs the selected display using the displayID and loads it into "display"
+    display = Displays.query.filter_by(displayID=displayID).first()
+    #grabs all the shops in the database for the admin user to select and tie to a shop
+    shops = Shops.query.all()
+    if request.method == 'POST':
+        display.shopID = request.form.get('newShopID')
+        db.session.commit()
+        return redirect(url_for('displays.adminDisplays'))
+    #Need to check the return data to confirm all is being utilised
+    return render_template("adminDisplayEdit.html",
+                           user=user, displays=displays,
+                           displayID=displayID,
+                           shops=shops)
+
+
 @displays.route('/menuSetup/<int:display_id>', methods=['GET', 'POST'])
 @login_required
 def menuSetup(display_id):
@@ -46,7 +68,6 @@ def menuSetup(display_id):
     user = current_user
     display = Displays.query.get(displayID)
     shopMenus = ShopMenus.query.filter_by(displayID=displayID).all()
-
     return render_template('menuSetup.html',
                            displays=displays,
                            user=user,
@@ -99,7 +120,7 @@ def menuSetupEdit(shopMenu_id):
     shopMenuID = shopMenu_id
     user = current_user
     items = Items.query.filter_by(primaryUserID=user.id).all()
-    menuItems = MenuItems.query.filter_by(menuID=shopMenuID)
+    menuItems = MenuItems.query.filter_by(menuID=shopMenuID).order_by(asc(MenuItems.itemOrder)).all()
     shopMenus = ShopMenus.query.all()
     shopMenu = ShopMenus.query.get(shopMenuID)
     newMenuActive_alt = 'on' if shopMenu.menuActive else 'off'
@@ -120,7 +141,7 @@ def menuSetupEdit(shopMenu_id):
 
             newMenuFinishTime_alt = request.form.get('newMenuFinishTime')
             #if statement required as there is a change in format of the time from read to write.
-            #the if statement handles both cases.
+            #the if statement handles both cases.items
             if len(newMenuFinishTime_alt) > 5:
                 shopMenu.menuFinishTime = datetime.strptime(newMenuFinishTime_alt, '%H:%M:%S').time()
             else:

@@ -39,7 +39,8 @@
             </thead>
             <tbody>
             {% for display in displays %}
-                <tr>
+                {#Sets the row as selectable and on click redirects the user to the adminDisplayEdit page with a GET header being the displayID#}
+                <tr onclick="window.location.href='/adminDisplayEdit/{{ display.displayID }}';" name="{{ display.displayID }}">
                     <td>{{ display.displayID }}</td>
                     <td>{{ display.shopID }}</td>
                 </tr>

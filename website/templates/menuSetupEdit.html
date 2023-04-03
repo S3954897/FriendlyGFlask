@@ -1,5 +1,33 @@
 {% extends "base.html" %} {% block title %}Menu Setup{% endblock %}
 {% block content %}
+    <script>
+        $(document).ready(function () {
+            $("#sortable-items tbody").sortable({
+                update: function (event, ui) {
+                    var item_order_data = [];
+
+                    $("#sortable-items tbody tr").each(function (index, element) {
+                        var menuItemID = $(element).data("menuitemid");
+                        item_order_data.push({ menuItemID: menuItemID, itemOrder: index });
+                    });
+
+                    $.ajax({
+                        url: "{{ url_for('views.update_item_order') }}",
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify(item_order_data),
+                        success: function (response) {
+                            if (response.status === "success") {
+                                console.log("Item order updated successfully.");
+                            } else {
+                                console.error("Error updating item order.");
+                            }
+                        },
+                    });
+                },
+            });
+        });
+    </script>
     <form method="POST" action="{{ url_for('displays.menuSetupEdit', shopMenu_id=shopMenu.shopMenuID) }}">
         <input type="hidden" name="form_type" value="menu_setup_edit">
         <input type="hidden" name="shopMenuID" value="{{ shopMenu.shopMenuID }}">
@@ -35,41 +63,25 @@
             </select>
             <input type="submit" value="Add Item">
         </form>
-    <div>
-    <h3>Group 1 List</h3>
+    <div id="sortable-items">
+        <h3>Group 1 List</h3>
         <table>
             <thead>
                 <tr>
-                <th>Item Name</th>
+                    <th>Item Name</th>
                 </tr>
             </thead>
             <tbody>
             {% for menuItem in menuItems %}
-{#                <tr onclick="window.location.href='/itemEdit/{{ item.itemID }}';" name="{{ item.itemID }}">#}
-                    <td>{{ menuItem.itemID }}</td>
+                <tr data-menuitemid="{{ menuItem.menuItemID }}">
+                    <td>{{ menuItem.item.itemName }}</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
-{#        <br><button id="add-item-button">Add Another Item</button>#}
-{#        <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>#}
-{#        <script>#}
-{#            $(document).ready(function() {#}
-{#            $('#add-item-button').click(function() {#}
-{#                var select = $('<select>').attr('name', 'item');#}
-{#                var option = $('<option>').attr('value', '').text('-- Select an Item --');#}
-{#                select.append(option);#}
-{#                {% for item in items %}#}
-{#                    var option = $('<option>').attr('value', '{{ item.itemID }}').text('{{ item.itemName }}');#}
-{#                    select.append(option);#}
-{##}
-{#                {% endfor %}#}
-{#                $('#new-item-container').append(select);#}
-{#            });#}
-{#            });#}
-{#        </script>#}
     {% endif %}
+
 {% endblock %}
 
 
