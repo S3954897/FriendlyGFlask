@@ -1,0 +1,176 @@
+{% extends "base.html" %} {% block title %}Menu Setup{% endblock %}
+{% block content %}
+
+    <script>
+        $(document).ready(function () {
+            // Make the add order sortable
+            $("#sortable-ad tbody").sortable({
+                update: function (event, ui) {
+                    var ad_order_data = [];
+
+                    $("#sortable-ad tbody tr").each(function (index, element) {
+                        var menuAdID = $(element).data("menuadid");
+                        ad_order_data.push({ menuAdID: menuAdID, adOrder: index });
+                    });
+
+                    $.ajax({
+                        url: "{{ url_for('adsControl.update_ad_order') }}",
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify(ad_order_data),
+                        success: function (response) {
+                            if (response.status === "success") {
+                                console.log("Ad order updated successfully.");
+                            } else {
+                                console.error("Error updating ad order.");
+                            }
+                        },
+                    });
+                },
+            });
+
+
+
+            // Deleting a row
+
+            $('.menu-ad-row').on('contextmenu', function(event) {
+                event.preventDefault(); // Prevent the default context menu from appearing
+
+                // Get the menuItemID from the associated data attribute
+                const menuAdID = $(this).data('menuadid');
+
+                // Create the custom context menu
+                const contextMenu = $('<div class="custom-context-menu">Remove item</div>');
+
+                // Add click event listener to the context menu's delete option
+                contextMenu.on('click', function() {
+                    if (menuAdID) {
+                        deleteMenuAd(menuAdID);
+                    }
+                });
+
+                // Append the context menu to the body and position it at the cursor
+                $('body').append(contextMenu);
+                contextMenu.css({ top: event.pageY + 'px', left: event.pageX + 'px' });
+
+                // Remove the context menu when clicking outside of it
+                $(document).on('mousedown', function(event) {
+                    if (!$(event.target).closest('.custom-context-menu').length) {
+                        contextMenu.remove();
+                    }
+                });
+            });
+
+
+            function deleteMenuAd(menuAdID) {
+                console.log(menuAdID)
+                $.ajax({
+                    url: "{{ url_for('displays.deleteMenuAd') }}",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({menuAdID: menuAdID}),
+                    success: function (response) {
+                        if (response.status === "success") {
+                            console.log(response.message);
+                            location.reload()
+                        } else {
+                            console.error("Error performing the action.");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX request error:", error);
+                    },
+                });
+                // Send an AJAX request to delete the menu item with the given menuItemID
+                // (Your existing deleteMenuItem() function should be here)
+            };
+        });
+    </script>
+
+    <h2>Edit 1</h2>
+
+    <form method="POST" action="{{ url_for('displays.menuSetupEdit', shopMenu_id=shopMenu.shopMenuID) }}">
+        <input type="hidden" name="form_type" value="menu_setup_edit">
+        <input type="hidden" name="shopMenuID" value="{{ shopMenu.shopMenuID }}">
+        <div class="form-group">
+            <label for="newMenuTitle">Menu Title:</label>
+            <input type="text" class="form-control" id="newMenuTitle" name="newMenuTitle" value="{{ shopMenu.menuTitle }}">
+        </div>
+        <div class="form-group">
+            <label for="newMenuTypeID">Menu Type:</label>
+            <input type="text" class="form-control" id="newMenuTypeID" name="newMenuTypeID" value="{{ shopMenu.menuTypeID }}">
+        </div>
+        <div class="form-group">
+            <label for="newMenuStartTime">Menu Start Time:</label>
+            <input type="time" class="form-control" id="newMenuStartTime" name="newMenuStartTime" value="{{ shopMenu.menuStartTime }}">
+        </div>
+        <div class="form-group">
+            <label for="newMenuFinishTime">Menu Finish Time:</label>
+            <input type="time" class="form-control" id="newMenuFinishTime" name="newMenuFinishTime" value="{{ shopMenu.menuFinishTime }}">
+        </div>
+        <div class="form-group">
+            <label for="newMenuActive_alt">Menu Active:</label>
+            <input type="checkbox" class="form-control" id="newMenuActive_alt" name="newMenuActive_alt" {% if shopMenu.menuActive %}checked{% endif %}>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+    {% if shopMenu.menuTypeID == 1 %}
+        <form method="POST" action="{{ url_for('displays.menuSetupEdit', shopMenu_id=shopMenu.shopMenuID) }}">
+            <input type="hidden" name="form_type" value="add_menu_ads">
+
+{#            <select name="ad" id="ad-select">#}
+{#                {% for ad in ads %}#}
+{#                    <option value="{{ ad.adID }}"><img src="{{ url_for('static', filename= 'adverts/thumbnails/' + ad.thumbnail_path.split('/')[-1]) }}" alt="{{ ad.adName }}"></option>#}
+{#                {% endfor %}#}
+{#            </select>#}
+
+            <select class="select2" name="ad" id="ad-select">
+                {% for ad in ads %}
+                    <option value="{{ ad.adID }}" data-thumbnail="{{ url_for('static', filename= 'adverts/thumbnails/' + ad.thumbnail_path.split('/')[-1]) }}">
+                        {{ ad.adName }}
+                    </option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Add Item">
+        </form>
+
+        <script>
+            $(document).ready(function() {
+                // Initialize the Select2 dropdown
+                $('.select2').select2({
+                    templateResult: formatState // Use the formatState function to display thumbnail images
+                });
+                // Function to format the Select2 dropdown options
+                function formatState(option) {
+                    if (!option.id) {
+                        return option.text;
+                    }
+                    var $option = $(
+                    '<span><img src="' + $(option.element).data('thumbnail') + '" class="img-thumbnail" width="180" height="120" /> ' + option.text + '</span>'
+                    );
+                    return $option;
+                }
+            });
+        </script>
+
+        <div id="sortable-ad">
+            <h3>Group 1 List</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ad Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for menuAd in menuAds %}
+                    <tr  class="menu-ad-row" data-menuadid="{{ menuAd.menuAdID }}">
+                        <td><img src="{{ url_for('static', filename= 'adverts/thumbnails/' + menuAd.advertisement.thumbnail_path.split('/')[-1]) }}" alt="{{ menuAd.advertisement.adName }}"></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}
+
+

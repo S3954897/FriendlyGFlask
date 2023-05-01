@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template, request, jsonify, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
-from . import db
+from sqlalchemy import asc
 from .models import *
 
 views = Blueprint('views', __name__)
@@ -28,7 +28,6 @@ def profile():
     return render_template("profile.html", user=user, userShops=userShops, displays=displays)
 
 
-
 @views.route('/profile_edit', methods=['GET', 'POST'])
 @login_required
 def profile_edit():
@@ -42,13 +41,8 @@ def profile_edit():
         return redirect(url_for('views.profile'))
     return render_template("profile_edit.html", user=user)
 
-#no use for this screen at this time.  Keeping just incase something else pop's up
-@views.route('/screens')
-@login_required
-def screens():
-    return render_template("screens.html")
 
-#The flag for an admin user has to be set manually in the db
+# The flag for an admin user has to be set manually in the db
 @views.route('/admin', methods=['GET', 'POST'])
 @login_required
 def admin():
@@ -126,7 +120,7 @@ def adminShopsAddNew():
 @login_required
 def items():
     user = current_user
-    items = Items.query.filter_by(primaryUserID=user.id).all()
+    items = Items.query.filter_by(primaryUserID=user.id).order_by(asc(Items.itemName)).all()
     return render_template("Items.html", user=user, items=items)
 
 
@@ -138,7 +132,7 @@ def itemAddNew():
     if request.method == 'POST':
         newItemName = request.form.get('newItemName')
         newItemPrice = request.form.get('newItemPrice')
-        itemNameCheck = Items.query.filter_by(itemName=newItemName).first()
+        itemNameCheck = Items.query.filter_by(itemName=newItemName, primaryUserID=user.id).first()
         if itemNameCheck:
             flash('item name already exists.', category='error')
         elif newItemName == "":
@@ -167,6 +161,8 @@ def itemEdit(item_id):
     return render_template("itemEdit.html", user=user, items=items, item=item)
 
 
+# delete an item from the items list by first removing the item from all of its associated menus
+# and then deleting it from the items table
 @views.route('/itemDelete/<int:item_id>', methods=['POST'])
 @login_required
 def itemDelete(item_id):
@@ -194,8 +190,6 @@ def update_item_order():
     return {"status": "success"}
 
 
-
-
 @views.route('/setup', methods=['GET', 'POST'])
 @login_required
 def setup():
@@ -204,17 +198,3 @@ def setup():
         if item1:
             pass
     return render_template("setup.html")
-
-
-# @views.context_processor
-# def context_processor(item1=None):
-#     pass
-#
-#
-# @views.route('/get-item1-value')
-# def get_item1_value():
-#     pass
-#
-#     # return the value of item1 as a JSON object
-#     return jsonify()
-

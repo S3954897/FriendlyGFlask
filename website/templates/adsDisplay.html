@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <title>{% block title %}Home{% endblock %}</title>
+        <style>
+            .advert {
+                background-image: url({{ url_for('static', filename='adverts/8DzzAeHwOW_giphy.gif') }})
+            }
+        </style>
+    </head>
+    <body>
+        <div class="advert"></div>
+    </body>
+</html>

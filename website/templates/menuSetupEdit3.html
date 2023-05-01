@@ -1,0 +1,141 @@
+{% extends "base.html" %} {% block title %}Menu Setup{% endblock %}
+{% block content %}
+    <script>
+    // Javascript for the sortable order function of the items on the menu
+        $(document).ready(function () {
+            $("#sortable-items tbody").sortable({
+                update: function (event, ui) {
+                    var item_order_data = [];
+
+                    $("#sortable-items tbody tr").each(function (index, element) {
+                        var menuItemID = $(element).data("menuitemid");
+                        item_order_data.push({ menuItemID: menuItemID, itemOrder: index });
+                    });
+
+                    $.ajax({
+                        url: "{{ url_for('views.update_item_order') }}",
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify(item_order_data),
+                        success: function (response) {
+                            if (response.status === "success") {
+                                console.log("Item order updated successfully.");
+                            } else {
+                                console.error("Error updating item order.");
+                            }
+                        },
+                    });
+                },
+            });
+
+            $('.menu-item-row').on('contextmenu', function(event) {
+                event.preventDefault(); // Prevent the default context menu from appearing
+
+                // Get the menuItemID from the associated data attribute
+                const menuItemID = $(this).data('menuitemid');
+
+                // Create the custom context menu
+                const contextMenu = $('<div class="custom-context-menu">Remove item</div>');
+
+                // Add click event listener to the context menu's delete option
+                contextMenu.on('click', function() {
+                    if (menuItemID) {
+                        deleteMenuItem(menuItemID);
+                    }
+                });
+
+                // Append the context menu to the body and position it at the cursor
+                $('body').append(contextMenu);
+                contextMenu.css({ top: event.pageY + 'px', left: event.pageX + 'px' });
+
+                // Remove the context menu when clicking outside of it
+                $(document).on('mousedown', function(event) {
+                    if (!$(event.target).closest('.custom-context-menu').length) {
+                        contextMenu.remove();
+                    }
+                });
+            });
+
+            function deleteMenuItem(menuItemID) {
+                console.log(menuItemID)
+                $.ajax({
+                    url: "{{ url_for('displays.menuItemDelete') }}",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({ menuItemID: menuItemID }),
+                    success: function (response) {
+                        if (response.status === "success") {
+                            console.log(response.message);
+                            location.reload()
+                        } else {
+                            console.error("Error performing the action.");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX request error:", error);
+                    },
+                });
+                // Send an AJAX request to delete the menu item with the given menuItemID
+                // (Your existing deleteMenuItem() function should be here)
+            }
+        });
+    </script>
+
+    <h2>Edit 3</h2>
+
+    <form method="POST" action="{{ url_for('displays.menuSetupEdit', shopMenu_id=shopMenu.shopMenuID) }}">
+        <input type="hidden" name="form_type" value="menu_setup_edit">
+        <input type="hidden" name="shopMenuID" value="{{ shopMenu.shopMenuID }}">
+        <div class="form-group">
+            <label for="newMenuTitle">Menu Title:</label>
+            <input type="text" class="form-control" id="newMenuTitle" name="newMenuTitle" value="{{ shopMenu.menuTitle }}">
+        </div>
+        <div class="form-group">
+            <label for="newMenuTypeID">Menu Type:</label>
+            <input type="text" class="form-control" id="newMenuTypeID" name="newMenuTypeID" value="{{ shopMenu.menuTypeID }}">
+        </div>
+        <div class="form-group">
+            <label for="newMenuStartTime">Menu Start Time:</label>
+            <input type="time" class="form-control" id="newMenuStartTime" name="newMenuStartTime" value="{{ shopMenu.menuStartTime }}">
+        </div>
+        <div class="form-group">
+            <label for="newMenuFinishTime">Menu Finish Time:</label>
+            <input type="time" class="form-control" id="newMenuFinishTime" name="newMenuFinishTime" value="{{ shopMenu.menuFinishTime }}">
+        </div>
+        <div class="form-group">
+            <label for="newMenuActive_alt">Menu Active:</label>
+            <input type="checkbox" class="form-control" id="newMenuActive_alt" name="newMenuActive_alt" {% if shopMenu.menuActive %}checked{% endif %}>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+    {% if shopMenu.menuTypeID == 3 %}
+        <form method="POST" action="{{ url_for('displays.menuSetupEdit', shopMenu_id=shopMenu.shopMenuID) }}">
+            <input type="hidden" name="form_type" value="add_menu_item">
+            <select name="item">
+                {% for item in items %}
+                    <option value="{{ item.itemID }}">{{ item.itemName }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Add Item">
+        </form>
+    <div id="sortable-items">
+        <h3>Group 1 List</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for menuItem in menuItems %}
+                <tr  class="menu-item-row" data-menuitemid="{{ menuItem.menuItemID }}">
+                    <td>{{ menuItem.item.itemName }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+{% endblock %}
+
+

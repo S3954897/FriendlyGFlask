@@ -1,19 +1,9 @@
-{% extends "base.html" %}{% block title %}{{ shopMenus.menuTitle }}{% endblock %}
+{% extends "base.html" %}{% block title %}{{ "Biztek" }}{% endblock %}
 {% block content %}
     <div>
         <header>
-            <h1>{{ shopMenus.menuTitle }}</h1>
+            <h1>Biztek</h1>
         </header>
-    </div>
-    <div>
-        <table id="myTable">
-            {% for menuItem in menuItems %}
-                <tr>
-                    <td>{{ menuItem.item.itemName }}</td>
-                    <td>${{ menuItem.item.itemPrice }}</td>
-                </tr><br>
-            {% endfor %}
-        </table>
     </div>
     <script>
         // Set the interval to refresh the entire page

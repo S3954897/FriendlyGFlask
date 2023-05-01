@@ -26,8 +26,60 @@
                     });
                 },
             });
+
+            $('.menu-item-row').on('contextmenu', function(event) {
+                event.preventDefault(); // Prevent the default context menu from appearing
+
+                // Get the menuItemID from the associated data attribute
+                const menuItemID = $(this).data('menuitemid');
+
+                // Create the custom context menu
+                const contextMenu = $('<div class="custom-context-menu">Remove item</div>');
+
+                // Add click event listener to the context menu's delete option
+                contextMenu.on('click', function() {
+                    if (menuItemID) {
+                        deleteMenuItem(menuItemID);
+                    }
+                });
+
+                // Append the context menu to the body and position it at the cursor
+                $('body').append(contextMenu);
+                contextMenu.css({ top: event.pageY + 'px', left: event.pageX + 'px' });
+
+                // Remove the context menu when clicking outside of it
+                $(document).on('mousedown', function(event) {
+                    if (!$(event.target).closest('.custom-context-menu').length) {
+                        contextMenu.remove();
+                    }
+                });
+            });
+
+            function deleteMenuItem(menuItemID) {
+                console.log(menuItemID)
+                $.ajax({
+                    url: "{{ url_for('displays.menuItemDelete') }}",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({ menuItemID: menuItemID }),
+                    success: function (response) {
+                        if (response.status === "success") {
+                            console.log(response.message);
+                            location.reload()
+                        } else {
+                            console.error("Error performing the action.");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX request error:", error);
+                    },
+                });
+                // Send an AJAX request to delete the menu item with the given menuItemID
+                // (Your existing deleteMenuItem() function should be here)
+            }
         });
     </script>
+
     <form method="POST" action="{{ url_for('displays.menuSetupEdit', shopMenu_id=shopMenu.shopMenuID) }}">
         <input type="hidden" name="form_type" value="menu_setup_edit">
         <input type="hidden" name="shopMenuID" value="{{ shopMenu.shopMenuID }}">
@@ -73,7 +125,7 @@
             </thead>
             <tbody>
             {% for menuItem in menuItems %}
-                <tr data-menuitemid="{{ menuItem.menuItemID }}">
+                <tr  class="menu-item-row" data-menuitemid="{{ menuItem.menuItemID }}">
                     <td>{{ menuItem.item.itemName }}</td>
                 </tr>
             {% endfor %}
@@ -81,7 +133,6 @@
         </table>
     </div>
     {% endif %}
-
 {% endblock %}
 
 

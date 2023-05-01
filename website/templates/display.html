@@ -1,24 +1,64 @@
 {% extends "base.html" %}{% block title %}{{ shopMenuTitle }}{% endblock %}
 {% block content %}
-    <div>
-        <header>
-            <h1>Test - {{ shopMenuTitle }}</h1>
-        </header>
-    </div>
-    <div>
-        <table id="myTable">
-            {% for menuItem in menuItems %}
-                <tr>
-                    <td>{{ menuItem.item.itemName }}</td>
-                    <td>${{ menuItem.item.itemPrice }}</td>
-                </tr><br>
+    {% if shopMenu.menuTypeID == 1 %}
+        <div id="ads-container">
+            {% for ad in ads %}
+                <div class="advert-container">
+                    <div class="advert" style="background-image: url({{ url_for('static', filename= 'adverts/' + ad.advertisement.file_path.split('/')[-1]) }})"></div>
+                </div>
             {% endfor %}
-        </table>
-    </div>
-    <script>
+        </div>
+        <script>
+            const ads = document.querySelectorAll('.advert-container');
+            let i = 0;
+
+            function showNextAd() {
+
+                // Hide the current ad
+                ads[i].classList.remove('visible');
+
+                // Increment the counter and loop around to the beginning if necessary
+                i = (i + 1) % ads.length;
+
+                // Show the next ad
+                ads[i].classList.add('visible');
+
+                // Pause for 10 seconds before showing the next ad
+                setTimeout(function() {
+                    if (i == (ads.length-1)) {
+                        console.log("Check 1")
+                        window.location.href = '/display/{{ displayID }}';
+                        // Make an AJAX request to the server to trigger the display function
+                    }
+                    showNextAd();
+                }, 10000);
+            }
+            // Show the first ad and start the cycle
+            ads[i].classList.add('visible');
+            setTimeout(showNextAd, 10000);
+        </script>
+
+    {% elif shopMenu.menuTypeID == 3 %}
+        <div>
+            <header>
+                <h1>{{ shopMenu.menuTitle }}</h1>
+            </header>
+        </div>
+        <div>
+            <table id="myTable">
+                {% for menuItem in menuItems %}
+                    <tr>
+                        <td>{{ menuItem.item.itemName }}</td>
+                        <td>${{ menuItem.item.itemPrice }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <script>
         // Set the interval to refresh the entire page
-        setInterval(() => {
-            location.reload(); // Refresh the page
-        }, 5000); // Refresh every 5 seconds
-    </script>
+            setInterval(() => {
+                location.reload(); // Refresh the page
+            }, 5000); // Refresh every 5 seconds
+        </script>
+    {% endif %}
 {% endblock %}

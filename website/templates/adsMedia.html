@@ -1,0 +1,33 @@
+{% extends "base.html" %} {% block title %}Advertisements{% endblock %}
+{% block content %}
+    <div class="header" id="myHeader">
+        <h2>Advertisements</h2>
+        <nav>
+            <ul>
+                <li><a href='/home'>Home</a></li>
+                <li><a href='/adsMedia'>Advertisements</a></li>
+                <li><a href='/items'>Items</a></li>
+                <li><a href='/profile'>Profile</a></li>
+                <li><a href='grid.html'>Grid Layout</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div>
+        <form action="{{ url_for('adsControl.upload_ad') }}" method="post" enctype="multipart/form-data">
+            <label for="ad-file">Select an ad image or video:</label>
+            <input type="file" id="ad-file" name="ad-file" accept="image/*,video/*">
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+    <div>
+        {% for ad in ads %}
+                <div>
+                    <img src="{{ url_for('static', filename= 'adverts/thumbnails/' + ad.thumbnail_path.split('/')[-1]) }}" alt="{{ ad.adName }}">
+                    <p>{{ ad.adName }}</p>
+                </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+
+
