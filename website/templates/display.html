@@ -39,21 +39,25 @@
         </script>
 
     {% elif shopMenu.menuTypeID == 3 %}
-        <div>
-            <header>
-                <h1>{{ shopMenu.menuTitle }}</h1>
-            </header>
-        </div>
-        <div>
-            <table id="myTable">
-                {% for menuItem in menuItems %}
-                    <tr>
-                        <td>{{ menuItem.item.itemName }}</td>
-                        <td>${{ menuItem.item.itemPrice }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        </div>
+        <main class = 'menu3'>
+            <div>
+                <header>
+                    <h1>{{ shopMenu.menuTitle }}</h1>
+                    <br>
+                </header>
+            </div>
+            <div class="items">
+                <table id="myTable">
+                    {% for menuItem in menuItems %}
+                        <tr>
+                            <td>{{ menuItem.item.itemName }}</td>
+                            <td>${{ menuItem.item.itemPrice }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </main>
+
         <script>
         // Set the interval to refresh the entire page
             setInterval(() => {
