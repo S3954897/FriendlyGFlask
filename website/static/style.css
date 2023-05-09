@@ -27,17 +27,7 @@ body {
     margin: 20px;
 }
 
-p, table {
-    font-family: 'Nunito', sans-serif;
-    font-size: 16px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding-top: 0;
-}
 
-table {
-    width: 100%;
-}
 
 .col1{
     width: 490px;
@@ -177,12 +167,38 @@ fieldset input[type="radio"]{
     font-family: 'Orbitron', sans-serif;
 
 }
-.menu3 h1 {
-    font-family: "Arial Rounded MT Bold";
-}
 
+/*.items {*/
+/*    box-sizing: border-box;*/
+/*    display: inline-grid;*/
+/*    grid-template-columns: 600px 600px;*/
+/*    gap: 5px;*/
+/*    border-radius: 10px;*/
+/*    width: fit-content;*/
+/*    width: 595px;*/
+/*    height: 140px;*/
+/*    background-color: #570000;*/
+/*    !*margin: auto;*!*/
+/*    padding-left: 15px;*/
+/*    color: #ffffff;*/
+/*}*/
+
+/*p, table {*/
+/*    font-family: 'Nunito', sans-serif;*/
+/*    font-size: 16px;*/
+/*    margin-top: 5px;*/
+/*    margin-bottom: 5px;*/
+/*    padding-top: 0;*/
+/*}*/
+
+/*table {*/
+/*    width: 100%;*/
+/*}*/
 .items {
     box-sizing: border-box;
+    display: inline-grid;
+    grid-template-columns: 600px 600px;
+    gap: 5px;
     border-radius: 10px;
     width: fit-content;
     width: 595px;
@@ -191,6 +207,27 @@ fieldset input[type="radio"]{
     /*margin: auto;*/
     padding-left: 15px;
     color: #ffffff;
+    position: relative;
+}
+
+table {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+p, table {
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 0;
+}
+
+table {
+    width: 100%;
+    padding-left: 10px;
 }
 
 
