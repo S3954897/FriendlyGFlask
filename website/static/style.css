@@ -166,6 +166,7 @@ fieldset input[type="radio"]{
 
 .menu3 {
     font-family: 'Orbitron', sans-serif;
+    margin: 10px;
 
 }
 
@@ -206,7 +207,6 @@ table {
     width: 595px;
     height: 140px;
     background-color: #570000;
-    margin: 20px;
     padding-left: 15px;
     color: #ffffff;
     position: relative;
