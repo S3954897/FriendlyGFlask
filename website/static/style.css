@@ -227,6 +227,7 @@ p, #myTable {
 }
 
 #myTable {
+    position: absolute;
     width: 100%;
     padding-left: 10px;
 }
