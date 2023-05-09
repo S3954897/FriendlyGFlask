@@ -52,12 +52,12 @@ h1 {
 
 
 
-/*main {*/
-/*    box-sizing: border-box;*/
-/*    display: inline-grid;*/
-/*    grid-template-columns: 600px 600px;*/
-/*    gap: 5px;*/
-/*}*/
+main {
+    box-sizing: border-box;
+    display: inline-grid;
+    grid-template-columns: 600px 600px;
+    gap: 5px;
+}
 
 nav ul li{
     display: inline-block;
