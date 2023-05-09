@@ -183,17 +183,18 @@ fieldset input[type="radio"]{
 /*    color: #ffffff;*/
 /*}*/
 
-/*p, table {*/
-/*    font-family: 'Nunito', sans-serif;*/
-/*    font-size: 16px;*/
-/*    margin-top: 5px;*/
-/*    margin-bottom: 5px;*/
-/*    padding-top: 0;*/
-/*}*/
+p, table {
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 0;
+}
 
-/*table {*/
-/*    width: 100%;*/
-/*}*/
+table {
+    width: 100%;
+}
+
 .items {
     box-sizing: border-box;
     display: inline-grid;
@@ -217,7 +218,7 @@ table {
     width: 100%;
 }
 
-p, table {
+p, #myTable {
     font-family: 'Nunito', sans-serif;
     font-size: 16px;
     margin-top: 5px;
@@ -225,7 +226,7 @@ p, table {
     padding-top: 0;
 }
 
-table {
+#myTable {
     width: 100%;
     padding-left: 10px;
 }
