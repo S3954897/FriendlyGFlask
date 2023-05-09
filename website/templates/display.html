@@ -39,25 +39,6 @@
         </script>
 
     {% elif shopMenu.menuTypeID == 3 %}
-{#        <main class = 'menu3'>#}
-{#            <div>#}
-{#                <header>#}
-{#                    <h1>{{ shopMenu.menuTitle }}</h1>#}
-{#                    <br>#}
-{#                </header>#}
-{#            </div>#}
-{#            <div class="items">#}
-{#                <table id="myTable">#}
-{#                    {% for menuItem in menuItems %}#}
-{#                        <tr>#}
-{#                            <td>{{ menuItem.item.itemName }}</td>#}
-{#                            <td>${{ menuItem.item.itemPrice }}</td>#}
-{#                        </tr>#}
-{#                    {% endfor %}#}
-{#                </table>#}
-{#            </div>#}
-{#        </main>#}
-
         <main class='menu3'>
             {% set itemsPerPanel = 5 %}
             <div>
