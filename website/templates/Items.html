@@ -14,21 +14,23 @@
     <div>
     <h3>All Items</h3>
         <button type="button" onclick="window.location.href='/itemAddNew';">Add a new Item</button>
-        <table>
-            <thead>
-                <tr>
-                <th>Item Name</th>
-                <th>Item Price</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for item in items %}
-                <tr onclick="window.location.href='/itemEdit/{{ item.itemID }}';" name="{{ item.itemID }}">
-                    <td>{{ item.itemName }}</td>
-                    <td>{{ item.itemPrice }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                    <th>Item Name</th>
+                    <th>Item Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in items %}
+                    <tr onclick="window.location.href='/itemEdit/{{ item.itemID }}';" name="{{ item.itemID }}">
+                        <td>{{ item.itemName }}</td>
+                        <td>{{ item.itemPrice }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}
