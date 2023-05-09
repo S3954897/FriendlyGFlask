@@ -29,7 +29,6 @@ body {
 
 p, table {
     font-family: 'Nunito', sans-serif;
-    color: #b60404;
     font-size: 16px;
     margin-top: 5px;
     margin-bottom: 5px;
@@ -191,6 +190,7 @@ fieldset input[type="radio"]{
     background-color: #570000;
     /*margin: auto;*/
     padding-left: 15px;
+    color: #ffffff;
 }
 
 
