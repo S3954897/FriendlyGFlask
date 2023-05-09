@@ -40,25 +40,27 @@
 
     {% elif shopMenu.menuTypeID == 3 %}
         <main class='menu3'>
-            {% set itemsPerPanel = 5 %}
-            <div>
-                <header>
-                    <h1>{{ shopMenu.menuTitle }}</h1>
-                </header>
-            </div>
-            <div>
-                {% for itemsBatch in menuItems|batch(itemsPerPanel) %}
-                    <div class="items">
-                        <table id="myTable">
-                            {% for menuItem in itemsBatch %}
-                                <tr>
-                                    <td>{{ menuItem.item.itemName }}</td>
-                                    <td>${{ menuItem.item.itemPrice }}</td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                {% endfor %}
+            <div id="menu3">
+                {% set itemsPerPanel = 5 %}
+                <div>
+                    <header>
+                        <h1>{{ shopMenu.menuTitle }}</h1>
+                    </header>
+                </div>
+                <div>
+                    {% for itemsBatch in menuItems|batch(itemsPerPanel) %}
+                        <div class="items">
+                            <table id="myTable">
+                                {% for menuItem in itemsBatch %}
+                                    <tr>
+                                        <td>{{ menuItem.item.itemName }}</td>
+                                        <td>${{ menuItem.item.itemPrice }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </main>
 

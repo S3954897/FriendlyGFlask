@@ -166,8 +166,10 @@ fieldset input[type="radio"]{
 
 .menu3 {
     font-family: 'Orbitron', sans-serif;
-    margin: 10px;
+}
 
+#menu3 {
+        margin: 20px;
 }
 
 /*.items {*/
