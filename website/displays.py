@@ -346,5 +346,8 @@ def display(display_id):
                                                shopMenu=shopMenu,
                                                menuItems=menuItems,
                                                shopMenuTitle=shopMenuTitle)
+
+            else:
+                return render_template('default.html')
     else:
-        return render_template('D0573.html')
+        return render_template('default.html')

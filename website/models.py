@@ -26,6 +26,7 @@ class Displays(db.Model):
     displayID = db.Column(db.Integer, primary_key=True)
     shopID = db.Column(db.Integer, db.ForeignKey('shops.shopID', name='fk_shops_shopID'))
     shopMenus = db.relationship('ShopMenus', backref='display')
+    shops = db.relationship('Shops', backref='display')
 
 
 class Advertisements(db.Model):

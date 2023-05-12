@@ -22,7 +22,7 @@ def randomAlphaNumeric(length=10):
 def adsMedia():
     user = current_user
     ads = Advertisements.query.filter_by(primaryUserID=user.id)
-    return render_template("adsMedia.html", ads=ads)
+    return render_template("adsMedia.html", ads=ads, user=user)
 
 
 def allowed_file(filename):

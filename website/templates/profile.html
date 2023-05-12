@@ -2,39 +2,30 @@
 {% block content %}
     <div class="header" id="myHeader">
         <h2>Profile</h2>
-        <nav>
-            <ul>
-                <li><a href='/adsMedia'>Advertisements</a></li>
-                <li><a href='/items'>Items</a></li>
-                <li><a href='/home'>Home</a></li>
-{#                <li><a href='grid.html'>Grid Layout</a></li>#}
-            </ul>
-        </nav>
     </div>
     {% block displaySetup %}
     <div>
-        <h3>Profile data</h3>
         <button type="button" onclick="window.location.href='/profile_edit';">Edit</button>
-        <article>
+        <div id="profileTable">
             <table>
                 <tr>
-                    <th>First Name: </th>
+                    <th class="rowHeader">First Name: </th>
                     <td class="col1">{{ user.firstName }} </td>
                 </tr>
                 <tr>
-                    <th>Last Name: </th>
+                    <th class="rowHeader">Last Name: </th>
                     <td class="col1">{{ user.lastName }}</td>
                 </tr>
                 <tr>
-                    <th>Email: </th>
-                    <td>{{ user.email }}</td>
+                    <th class="rowHeader">Email: </th>
+                    <td class="col1">{{ user.email }}</td>
                 </tr>
                 <tr>
-                    <th>Phone: </th>
-                    <td>{{ user.phone }}</td>
+                    <th class="rowHeader">Phone: </th>
+                    <td class="col1">{{ user.phone }}</td>
                 </tr>
                 <tr>
-                    <th>Linked Shops </th>
+                    <th class="col1"><h3>Linked Shops</h3></th>
                     <td>
                         {% for userShop in userShops %}
                             <tr>
@@ -46,7 +37,7 @@
                                 <th>Displays</th>
                                     {% for display in userShop.displays %}
                                         <td onclick="window.location.href='/menuSetup/{{ display.displayID }}';" name="{{ display.displayID }}">
-                                            {{ display.displayID }}<br>
+                                            {{ display.displayID }}
                                         </td>
                                     {% endfor %}
                             </tr>
@@ -54,7 +45,7 @@
                     </td>
                 </tr>
             </table>
-        </article>
+        </div>
     </div>
     {% endblock %}
 {% endblock %}

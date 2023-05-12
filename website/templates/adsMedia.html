@@ -2,15 +2,6 @@
 {% block content %}
     <div class="header" id="myHeader">
         <h2>Advertisements</h2>
-        <nav>
-            <ul>
-                <li><a href='/home'>Home</a></li>
-                <li><a href='/adsMedia'>Advertisements</a></li>
-                <li><a href='/items'>Items</a></li>
-                <li><a href='/profile'>Profile</a></li>
-                <li><a href='grid.html'>Grid Layout</a></li>
-            </ul>
-        </nav>
     </div>
     <div>
         <form action="{{ url_for('adsControl.upload_ad') }}" method="post" enctype="multipart/form-data">

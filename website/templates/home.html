@@ -4,15 +4,5 @@
         <h2>Home</h2>
         <br>
         <button onclick="window.location.href='/logout';">Logout</button>
-        <nav>
-            <ul>
-                <li><a href='/adsMedia'>Advertisements</a></li>
-                <li><a href='/items'>Items</a></li>
-                <li><a href='/profile'>Profile</a></li>
-                {% if user.userType == 1 %}
-                    <li><a href='/adminUsers'>Admin</a></li>
-                {% endif %}
-            </ul>
-        </nav>
     </div>
 {% endblock %}

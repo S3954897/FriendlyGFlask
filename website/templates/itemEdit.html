@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block content %}
     <h1>Edit Item</h1>
     <form method="POST" action="{{ url_for('views.itemEdit', item_id=item.itemID) }}">

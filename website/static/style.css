@@ -27,10 +27,21 @@ body {
     margin: 0px;
 }
 
+.base {
+    margin: 20px;
+}
 
 
-.col1{
-    width: 490px;
+
+.col1 {
+    width: 250px;
+    text-align: Left ;
+    color: black;
+
+}
+.rowHeader {
+    width: 250px;
+    text-align: right;
 }
 
 h1 {
@@ -49,15 +60,6 @@ h1 {
     color: #ff5e00;
     /*text-shadow: 5px 5px black;*/
 }
-
-
-
-/*main {*/
-/*    box-sizing: border-box;*/
-/*    display: inline-grid;*/
-/*    grid-template-columns: 600px 600px;*/
-/*    gap: 5px;*/
-/*}*/
 
 nav ul li{
     display: inline-block;
@@ -172,21 +174,6 @@ fieldset input[type="radio"]{
         margin: 20px;
 }
 
-/*.items {*/
-/*    box-sizing: border-box;*/
-/*    display: inline-grid;*/
-/*    grid-template-columns: 600px 600px;*/
-/*    gap: 5px;*/
-/*    border-radius: 10px;*/
-/*    width: fit-content;*/
-/*    width: 595px;*/
-/*    height: 140px;*/
-/*    background-color: #570000;*/
-/*    !*margin: auto;*!*/
-/*    padding-left: 15px;*/
-/*    color: #ffffff;*/
-/*}*/
-
 p, table {
     font-family: 'Nunito', sans-serif;
     font-size: 16px;
@@ -235,4 +222,7 @@ p, #myTable {
     padding-left: 10px;
 }
 
+#profileTable {
+
+}
 

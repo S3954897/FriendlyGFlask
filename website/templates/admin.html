@@ -2,18 +2,6 @@
 {% block content %}
     <div class="header" id="myHeader">
         <h2>Admin</h2>
-        <br>
-        <button onclick="window.location.href='/logout';">Logout</button>
-        <nav>
-            <ul>
-                <li><a href='/adsMedia'>Advertisements</a></li>
-                <li><a href='/items'>Items</a></li>
-                <li><a href='/profile'>Profile</a></li>
-                {% if user.userType == 1 %}
-                    <li><a href='/home'>Home</a></li>
-                {% endif %}
-            </ul>
-        </nav>
     </div>
     <div>
 

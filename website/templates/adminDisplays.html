@@ -2,18 +2,6 @@
 {% block content %}
     <div class="header" id="myHeader">
         <h2>Admin - Displays</h2>
-        <br>
-        <button onclick="window.location.href='/logout';">Logout</button>
-        <nav>
-            <ul>
-                <li><a href='/adsMedia'>Advertisements</a></li>
-                <li><a href='/items'>Items</a></li>
-                <li><a href='/profile'>Profile</a></li>
-                {% if user.userType == 1 %}
-                    <li><a href='/home'>Home</a></li>
-                {% endif %}
-            </ul>
-        </nav>
     </div>
     <div>
         <form method="POST">
@@ -33,8 +21,9 @@
         <table>
             <thead>
                 <tr>
-                <th>Display ID</th>
-                <th>Shop ID</th>
+                    <th>Display ID</th>
+                    <th>Shop ID</th>
+                    <th>Shop Name</th>
                 </tr>
             </thead>
             <tbody>
@@ -43,6 +32,7 @@
                 <tr onclick="window.location.href='/adminDisplayEdit/{{ display.displayID }}';" name="{{ display.displayID }}">
                     <td>{{ display.displayID }}</td>
                     <td>{{ display.shopID }}</td>
+                    <td>{{ display.shops.shopName }}</td>
                 </tr>
             {% endfor %}
             </tbody>
