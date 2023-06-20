@@ -1,10 +1,12 @@
-flask
-Flask-SQLAlchemy
-flask-login
+flask==2.3.2
+flask_sqlalchemy
+flask_login
+flask_mail
 datetime
-werkzeug==2.3.3
+werkzeug==2.3.6
 Image
-secrets
 flask_migrate
 Migrate
+Pillow
+mail
 
